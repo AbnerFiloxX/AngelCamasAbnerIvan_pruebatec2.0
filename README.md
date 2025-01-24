@@ -27,10 +27,8 @@ Este repositorio contiene el código fuente **Turnero** solicitado para la prueb
 ## Cómo ejecutar el proyecto
 debemos tener encendido tomcat y nuestro xampp
 
-Se debe aclarar que el codigo esta incompleto
-no logré finalizar y que realizara todo
-logro guardar los turno en mi base de datos pero no logré mostrar en pantalla 
-asi como la lista de tramites tuve que crearla manualmente para que me dejara seleccionarlas
+Se debe aclarar que logre terminarlo como me hubiera gustado
+logro guardar los turno en mi base de datos pero no logré mostrar en pantalla del todo por el problema de versiones ,pero en teoria deberia funcionar ya que mis log si funcionan
 
 
 los archivos se encuentran en la rama master asi como la imagen de las tablas
