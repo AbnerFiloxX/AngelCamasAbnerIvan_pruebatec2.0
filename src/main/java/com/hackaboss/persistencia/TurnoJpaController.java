@@ -1,40 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.hackaboss.persistencia;
 
-import com.hackaboss.logica.Estado;
-import com.hackaboss.logica.Turno;
-import com.hackaboss.persistencia.exceptions.NonexistentEntityException;
+package com.hab.persistencia;
+
+import com.hab.logica.Turno;
+import com.hab.persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-/**
- *
- * @author satel
- */
 public class TurnoJpaController implements Serializable {
 
     public TurnoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     
-    public List<Turno> findTurnoEntitiesByEstado(String estado) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            Query query = em.createQuery("SELECT t FROM Turno t WHERE t.estado = :estado");
-            query.setParameter("estado", Estado.valueOf(estado.toUpperCase()));
-            return query.getResultList();
-        } finally {
-            em.close();
-        }
+    public TurnoJpaController() {
+        emf = Persistence.createEntityManagerFactory("turneroPU");
     }
     
     private EntityManagerFactory emf = null;
@@ -67,7 +53,7 @@ public class TurnoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = turno.getId();
+                Long id = turno.getId();
                 if (findTurno(id) == null) {
                     throw new NonexistentEntityException("The turno with id " + id + " no longer exists.");
                 }
@@ -80,7 +66,7 @@ public class TurnoJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException {
+    public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -125,7 +111,7 @@ public class TurnoJpaController implements Serializable {
         }
     }
 
-    public Turno findTurno(int id) {
+    public Turno findTurno(Long id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Turno.class, id);

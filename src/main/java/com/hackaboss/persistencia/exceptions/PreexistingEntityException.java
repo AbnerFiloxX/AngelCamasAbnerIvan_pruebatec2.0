@@ -1,4 +1,4 @@
-package com.hackaboss.persistencia.exceptions;
+package com.hab.persistencia.exceptions;
 
 public class PreexistingEntityException extends Exception {
     public PreexistingEntityException(String message, Throwable cause) {

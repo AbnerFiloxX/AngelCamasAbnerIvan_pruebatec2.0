@@ -1,4 +1,4 @@
-package com.hackaboss.persistencia.exceptions;
+package com.hab.persistencia.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

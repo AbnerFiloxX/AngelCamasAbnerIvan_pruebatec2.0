@@ -1,29 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.hackaboss.persistencia;
+package com.hab.persistencia;
 
-import com.hackaboss.logica.Ciudadano;
-import com.hackaboss.persistencia.exceptions.NonexistentEntityException;
+import com.hab.logica.Ciudadano;
+import com.hab.persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-/**
- *
- * @author satel
- */
 public class CiudadanoJpaController implements Serializable {
 
     public CiudadanoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
+    public CiudadanoJpaController() {
+        emf = Persistence.createEntityManagerFactory("turneroPU");
+    }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -54,7 +52,7 @@ public class CiudadanoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = ciudadano.getId();
+                Long id = ciudadano.getId();
                 if (findCiudadano(id) == null) {
                     throw new NonexistentEntityException("The ciudadano with id " + id + " no longer exists.");
                 }
@@ -67,7 +65,7 @@ public class CiudadanoJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException {
+    public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -112,7 +110,7 @@ public class CiudadanoJpaController implements Serializable {
         }
     }
 
-    public Ciudadano findCiudadano(int id) {
+    public Ciudadano findCiudadano(Long id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Ciudadano.class, id);
@@ -130,6 +128,22 @@ public class CiudadanoJpaController implements Serializable {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
+            em.close();
+        }
+    }
+    
+    //filtrar por apellido directamente en la BD
+    public List<Ciudadano> findCiudadanoByApellido(String busquedaApellido) {
+        EntityManager em = getEntityManager();
+        try {
+            //Consulta JPQL
+            String consulta = "SELECT ciud FROM Ciudadano ciud WHERE ciud.apellido = :busquedaApellido";
+            //crear la consulta
+            Query query = em.createQuery(consulta);
+            query.setParameter("busquedaApellido", busquedaApellido);
+            //ejecutar la consulta y devolver el resultado en lista
+            return query.getResultList();
+        }finally {
             em.close();
         }
     }

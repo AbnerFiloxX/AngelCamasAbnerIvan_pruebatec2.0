@@ -1,103 +1,66 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.hackaboss.logica;
+package com.hab.logica;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author satel
- */
 @Entity
 public class Turno implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Temporal(TemporalType.TIMESTAMP)
+    private Long id;
+    @Column(name = "NUMEROTURNO")
+    private int numeroTurno; 
+    @Temporal(TemporalType.DATE)
     private Date fecha;
-
-    @Enumerated(EnumType.STRING)
-    private Estado estado;
-
     @ManyToOne
-    @JoinColumn(name = "ciudadano_id")
     private Ciudadano ciudadano;
-
     @ManyToOne
-    @JoinColumn(name = "tramite_id")
-    private Tramite tramite;
-
+    private TipoTramite tipoTramite;
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private EstadoTurno estadoTurno;
 
-    public int getId() {
-        return id;
+    public Turno() {
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
+    public Turno(int numeroTurno, Date fecha, Ciudadano ciudadano, TipoTramite tipoTramite, EstadoTurno estadoTurno) {
+        this.numeroTurno = numeroTurno;
         this.fecha = fecha;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-   
-
-    public Ciudadano getCiudadano() {
-        return ciudadano;
-    }
-
-    public void setCiudadano(Ciudadano ciudadano) {
         this.ciudadano = ciudadano;
+        this.tipoTramite = tipoTramite;
+        this.estadoTurno = estadoTurno;
     }
 
-    public Tramite getTramite() {
-        return tramite;
-    }
+    public Long getId() { return id; }
 
-    public void setTramite(Tramite tramite) {
-        this.tramite = tramite;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+    public int getNumeroTurno() { return numeroTurno; }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    public void setNumeroTurno(int numeroTurno) { this.numeroTurno = numeroTurno; }
 
-      
-      
+    public Date getFecha() { return fecha; }
+
+    public void setFecha(Date fecha) { this.fecha = fecha; }
+
+    public Ciudadano getCiudadano() { return ciudadano; }
+
+    public void setCiudadano(Ciudadano ciudadano) { this.ciudadano = ciudadano; }
+
+    public TipoTramite getTipoTramite() { return tipoTramite; }
+
+    public void setTipoTramite(TipoTramite tipoTramite) { this.tipoTramite = tipoTramite; }
+
+    public EstadoTurno getEstadoTurno() { return estadoTurno; }
+
+    public void setEstadoTurno(EstadoTurno estadoTurno) { this.estadoTurno = estadoTurno; }
+
 }
-
-
-
