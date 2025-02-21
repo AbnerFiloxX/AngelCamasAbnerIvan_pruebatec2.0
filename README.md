@@ -2,6 +2,15 @@
 ##Abner Ivan Angel Camas
 ##Prueba Tecnica #2
 
+**IMPORTANTE:**  
+Los archivos estan sobre la rama master
+Estos son datos de prueba utilizados en este proyecto:
+
+- **Usuario**: admin@gmail.com
+- **Contraseña**: 123456
+
+**Nota:** Estos datos se proporcionan solo para facilidad de quien revise la prueba. No deben usarse en producción.
+
 ## Descripción del Proyecto
 Esta aplicación web permite a una entidad gubernamental gestionar turnos/citas para diferentes trámites. Los ciudadanos pueden solicitar turnos, los cuales pueden ser filtrados según su estado: "En espera" o "Ya atendido". 
 
